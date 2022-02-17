@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{name}}
+{% endblock %}
+
+{% block description %}
+"{{name}}"
+{% endblock %}
+
+{% block content %}
+&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{url_for('static', filename='images/i_love_bin_bash.png')}}" alt="i_love_bin_bash.png">
+{% endblock %}

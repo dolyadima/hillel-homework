@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{name}}
+{% endblock %}
+
+{% block description %}
+"{{name}}"
+{% endblock %}
+
+{% block content %}
+<ul class="list-unstyled">
+    <ul>
+        <li>Your ip: {{ ip_ad }}</li>
+        <li>Your browser: {{ us_ag }}</li>
+        <li>Server time: {{ se_ti }}</li>
+    </ul>
+</ul>
+{% endblock %}
