@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{{name}}{% endblock %}
+
+{% block description %}"{{name}}"{% endblock %}
+
+{% block content %}
+&nbsp;&nbsp;&nbsp;&nbsp;Generated dataset: <b>{{english_sym}}</b><br />
+&nbsp;&nbsp;&nbsp;&nbsp;Length_of_str: <b>{{length}}</b><br />
+&nbsp;&nbsp;&nbsp;&nbsp;Special_characters: <b>{{specials}}</b><br />
+&nbsp;&nbsp;&nbsp;&nbsp;Include_the_numbers: <b>{{digits}}</b><br />
+&nbsp;&nbsp;&nbsp;&nbsp;Result: <b>{{result}}</b>
+{% endblock %}
