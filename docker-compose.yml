@@ -1,0 +1,9 @@
+version: '3'
+services:
+  server:
+    image: python:3.8-slim
+    volumes:
+      - .:/src
+    command: 'python3 /src/server.py'
+    stdin_open: true  # docker run -i
+    tty: true         # docker run -t
