@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap" rel="stylesheet">
+
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+  <div class="container">
+    <header class="d-flex justify-content-left py-2">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/" class="nav-link px-2 link-{% if active_page == 'home' %}dark{% else %}secondary{% endif %}">Home</a></li>
+        <li class="nav-item"><a href="/whoami/" class="nav-link px-2 link-{% if active_page == 'whoami' %}dark{% else %}secondary{% endif %}">Whoami</a></li>
+        <li class="nav-item"><a href="/source_code/" class="nav-link px-2 link-{% if active_page == 'source_code' %}dark{% else %}secondary{% endif %}">Source Code</a></li>
+        <li class="nav-item"><a href="/random/?length=16&specials=1&digits=1" class="nav-link px-2 link-{% if active_page == 'random' %}dark{% else %}secondary{% endif %}">Random</a></li>
+      </ul>
+    </header>
+  </div>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
