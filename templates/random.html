@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Random
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+  <div class="p-2 mb-4 bg-light rounded-3">
+    <div class="container-fluid">
+      <h1 class="display-10 fw-bold">Page Random</h1>
+      <form action="/random/" method="GET">
+
+        <table class="table table-bordered" style="width: 0;">
+
+          <tr>
+            <td class="td-1"><label for="length">Length:</label></td>
+            <td class="td-2"><input type="number" name="length" id="length" pattern="^[0-9]{2}$" value="{{length}}" /></td>
+          </tr>
+
+          <tr>
+            <td class="td-1"><label for="specials">Specials?</label></td>
+            <td class="td-2"><input type="checkbox" name="specials" id="specials" checked /></td>
+          </tr>
+
+          <tr>
+            <td class="td-1"><label for="digits">Digits?</label></td>
+            <td class="td-2"><input type="checkbox" name="digits" id="digits" checked /></td>
+          </tr>
+
+          <tr>
+            <td class="td-1"><button onclick="magick()" type="button" class="btn btn-secondary" style="padding: 2px 22px;">Result</button></td>
+            <td class="td-2"><input type="text" id="result" readonly value="{{result}}"></td>
+          </tr>
+
+        </table>
+
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  .td-1 {
+    text-align: right;
+  }
+  .td-2 {
+    text-align: left;
+  }
+  #result {
+    font-family: 'Anonymous Pro', Consolas, monospace;
+    font-size: 18px;
+  }
+</style>
+
+<script>
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const url_specials = urlParams.get('specials');
+  const url_digits = urlParams.get('digits');
+  document.getElementById('specials').checked = parseInt(url_specials) !== 0;
+  document.getElementById('digits').checked = parseInt(url_digits) !== 0;
+  function magick() {
+    const length = document.getElementById('length').value;
+    const specials = document.getElementById('specials').checked ? 1 : 0;
+    const digits = document.getElementById('digits').checked ? 1 : 0;
+    location.href = '/random/?length=' + length + '&specials=' + specials + '&digits=' + digits;
+  }
+</script>
+{% endblock %}

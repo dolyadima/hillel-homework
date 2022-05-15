@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Source Code
+{% endblock %}
+
+{% block content %}
+  <div class="container py-4">
+
+    <div class="p-2 mb-4 bg-light rounded-3">
+      <div class="container-fluid">
+        <h1 class="display-10 fw-bold">Page Source Code</h1>
+        <p class="col-md-12 fs-8">
+          <pre>{% for line in lines_of_code %}{{line}}<br/>{% endfor %}</pre>
+        </p>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}
