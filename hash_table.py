@@ -1,6 +1,3 @@
-from random import randint
-
-
 class Node:
     def __init__(self, key, value):
         self.key = key
@@ -8,105 +5,76 @@ class Node:
         self.next = None
 
     def __str__(self):
-        return f'<k:{self.key}|v:{",".join(self.value) if isinstance(self.value, list) else self.value}|next:{self.next is not None}>'
+        return f'(key:{self.key}, value:{self.value}, next -> {self.next})'
 
 
 class HashTable:
-    def __init__(self, init_capacity=15):
-        self.capacity = init_capacity
-        self.size = 0
-        self.buckets = [None] * self.capacity
+    def __init__(self):
+        self.data = dict()
 
-    def hash_func(self, key):
-        hash = 0
-        for index, char in enumerate(key):
-            hash += (index + len(key)) ** ord(char)
-            hash = hash % self.capacity
-        return hash
+    def hash_f(self, key):
+        return str(key)[0].upper()
 
-    def add_key_value(self, key, value):
-        self.size += 1
-        index = self.hash_func(key)
-        node = self.buckets[index]
-        if node is None:
-            self.buckets[index] = Node(key, value)
-            return
-        prev = node
-        while node is not None:
-            prev = node
-            node = node.next
-        prev.next = Node(key, value)
-
-    def find_value_by_key(self, key):
-        index = self.hash_func(key)
-        node = self.buckets[index]
-        while node is not None and node.key != key:
-            node = node.next
-        if node is None:
-            return None
+    def add_update_key_value(self, key, value):
+        hashed_key = self.hash_f(key)
+        
+        if hashed_key in self.data.keys():
+            previous_cell = None
+            current_cell = self.data[hashed_key]
+            while current_cell is not None and current_cell.key != key:
+                previous_cell = current_cell
+                current_cell = current_cell.next
+            if current_cell is not None:
+                current_cell.value = value
+                return
+            else:
+                previous_cell.next = Node(key, value)
         else:
-            return node.value
+            self.data[hashed_key] = Node(key, value)
 
-    def __getitem__(self, item):
-        return self.find_value_by_key(item)
+    def get_value_by_key(self, key):
+        hashed_key = self.hash_f(key)
+        if hashed_key in self.data.keys():
+            current_cell = self.data[hashed_key]
+            while current_cell is not None and current_cell.key != key:
+                current_cell = current_cell.next
+            if current_cell is not None:
+                return current_cell.value
+        return None
 
     def remove_value_by_key(self, key):
-        index = self.hash_func(key)
-        node = self.buckets[index]
-        prev = None
-        while node is not None and node.key != key:
-            prev = node
-            node = node.next
-        if node is None:
-            return None
-        else:
-            self.size -= 1
-            result = node.value
-            if prev is None:
-                self.buckets[index] = node.next
-            else:
-                prev.next = prev.next.next
-            return result
+        hashed_key = self.hash_f(key)
+        if hashed_key in self.data.keys():
+            previous_cell = None
+            current_cell = self.data[hashed_key]
+            while current_cell is not None and current_cell.key != key:
+                previous_cell = current_cell
+                current_cell = current_cell.next
+            if current_cell is not None:
+                if current_cell.next:
+                    previous_cell.next = current_cell.next
+                else:
+                    previous_cell.next = None
+        return None
 
     def __str__(self):
-        result = ''
-        for i, bucket in enumerate(self.buckets):
-            if bucket is not None:
-                result += f'bucket-{str(i).zfill(2)}: {bucket}'
-                count = 1
-                prev = bucket
-                while prev.next is not None:
-                    curr = prev.next
-                    result += f', {curr}'
-                    count += 1
-                    prev = curr
-                result += f' ({count})\n'
-            else:
-                result += f'bucket-{str(i).zfill(2)}: <>\n'
-        return result
-
-
-def generate_test_data(hashtable_obj, count=20):
-    for num in range(count):
-        rand_int = randint(10, 99)
-        key = f'key{str(rand_int)}'
-        hashtable_obj.add_key_value(f'{key}', [f'value{num}',
-                                               f'value{num}',
-                                               f'value{num}'])
+        for k, v in self.data.items():
+            print(f'{k} -> {v}')
+        return ''
 
 
 if __name__ == '__main__':
     ht = HashTable()
-    generate_test_data(ht)
-
-    """Block Tests HashTable()"""
-    # KEY_TEST = 'KEY322'
-    # ht.add_key_value(KEY_TEST, 'TESTING_DATA_VALUE')
-    # print(ht)
-    # print()
-    # print(f'FINDED_VALUE : "{ht.find_value_by_key(KEY_TEST)}"')
-    # print(f'FINDED_VALUE : "{ht.find_value_by_key("zxc")}"')
-    # print(f'FINDED_VALUE : "{ht["asdasd"]}"')
-    # print(f'FINDED_VALUE : "{ht[KEY_TEST]}"')
-    # print(f'REMOVED_VALUE: "{ht.remove_value_by_key(KEY_TEST)}"')
-    # print(f'REMOVED_VALUE: "{ht.remove_value_by_key("qwerty")}"')
+    ht.add_update_key_value('John', 1)
+    ht.add_update_key_value('Smith', 2)
+    ht.add_update_key_value('Mask', 3)
+    ht.add_update_key_value('Mila', 4)
+    ht.add_update_key_value('jack', 5)
+    ht.add_update_key_value('Nick', 6)
+    ht.add_update_key_value('jastin', 7)
+    ht.add_update_key_value('Name', 8)
+    print(ht)
+    ht.add_update_key_value('Jack', 555)
+    print(ht)
+    ht.remove_value_by_key('jack')
+    print(ht)
